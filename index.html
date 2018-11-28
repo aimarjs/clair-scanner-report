@@ -91,8 +91,6 @@
       <p id="subtext"></p>
     </div>
     <div id="container"></div>
-    
-
     <script type="text/javascript">
 
       var container = document.getElementById('container')
@@ -118,27 +116,20 @@
       }
 
       loadJSON((response) => {
-
         getImages(response, (image) => {
           var numbOfImages = response.length      
           subtext.innerHTML = `${numbOfImages} docker images were scanned`
-          // imageContainer.setAttribute("id", image.image)
-
           container.innerHTML = response.map((response, i) => {
-            
             var numbOfVulnerabilities = response.vulnerabilities.length
             var numbOfImages = response.length
             var errors = true
             if (numbOfVulnerabilities === 0) {
               errors = false
-            }
-             
-            var showVulnerabilitiesClass = 'vulnerabilities'
-            
+            }          
+            var showVulnerabilitiesClass = 'vulnerabilities' 
             var statusGood = '<p>all good<p>'
             var statusBad = `<p>${numbOfVulnerabilities} vulnerabilities found</p>`
-            var responseStyles = errors ? 'response bad' : 'response good'
-            
+            var responseStyles = errors ? 'response bad' : 'response good'           
             return `
               <div id="imageContainer">
                 <div class="${responseStyles}">
@@ -156,8 +147,7 @@
                       <th>Fixedby</th>
                     </tr>
                   </thead>
-                  <tbody>
-                   
+                  <tbody>                 
                       ${response.vulnerabilities.map(issue => {
                         return `
                           <tr>
@@ -168,37 +158,15 @@
                             <td>${issue.fixedby}</td>
                           </tr>
                         `
-                      }).join('')}
-                    
+                      }).join('')}                
                   </tbody>
                 </table>` : '' }
-
-
               </div>
             `   
           }).join('')
         })
-
       })
-
-      
-
     </script>
-
     <a href="http://www.github.com/aimarjs">aimarjs@github</a>
   </body>
 </html>
-
-<!-- <div class="${showVulnerabilitiesClass}">
-    ${response.vulnerabilities.map(issue => {
-      return `
-        <div class="row>
-          <p>${issue.severity}</p>
-          <a href="${issue.link}" target="_blank">${issue.featurename}</a>
-          <p>${issue.featureversion}</p>
-          <p>${issue.vulnerability}</p>
-          <p>${issue.fixedby}</p>
-        </div>
-      `
-    }).join('')}
-  </div> -->
